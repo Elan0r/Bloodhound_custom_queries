@@ -119,4 +119,4 @@ MATCH (u:User) where u.plaintext=True AND u.enabled=True and not u.email = [] RE
 
 -----------
 
-Thanks to [@_wald0](https://www.twitter.com/_wald0), [@CptJesus](https://twitter.com/CptJesus), [@harmj0y](https://twitter.com/harmj0y), [@BloodhoundAD](https://github.com/BloodHoundAD/BloodHound) for the tool itself and [@hausec](https://github.com/hausec) for his queries as template.
+Thanks to [@_wald0](https://www.twitter.com/_wald0), [@CptJesus](https://twitter.com/CptJesus), [@harmj0y](https://twitter.com/harmj0y), [@BloodhoundAD](https://github.com/BloodHoundAD/BloodHound) for the tool itself and [@hausec](https://github.com/hausec) and [@ly4k](https://github.com/ly4k) for his queries as template and of course [certipy](https://github.com/ly4k/certipy).
