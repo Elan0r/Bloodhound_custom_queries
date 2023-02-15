@@ -114,8 +114,9 @@ MATCH (u:User) where u.plaintext=True AND u.enabled=True RETURN u.name, u.plaint
 -----------
 
 Manual Crackhound, Username and Domain are all capital letters.
+Username Hash and Password needs to be in quotes.
 ```cypher
-match (u:User) where u.name="<BH_USER@DOMAIN>" set u.plaintextpassword="<S3c3t5>" set u.owned=True set u.plaintext=True return u
+match (u:User) where u.name="<BH_USER@DOMAIN>" set u.plaintextpassword="<S3c3t5>" set u.nthash="<HASH>" set u.owned=True set u.plaintext=True return u
 ```
 
 
