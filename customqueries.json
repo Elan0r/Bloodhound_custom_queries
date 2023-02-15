@@ -116,6 +116,26 @@
       ]
     },
     {
+      "name": "List all computers where PlantextPW user can RDP",
+      "category": "Owned",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (u1:User) WHERE u1.plaintext=True MATCH p1=(u1)-[:CanRDP*1..]->(c:Computer) RETURN p1"
+        }
+      ]
+    },
+    {
+      "name": "List all High Value PlantextPW user",
+      "category": "Owned",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (u1:User) WHERE u1.plaintext=True MATCH p=(u1:User)-[r:MemberOf*1..]->(m:Group {highvalue:true}) RETURN u1"
+        }
+      ]
+    },
+    {
       "name": "List all owned groups",
       "category": "Owned",
       "queryList": [
@@ -262,7 +282,7 @@
       ]
     },
     {
-      "name": "LAPS Passwords Readable by Owned Principals",
+      "name": "Find all computer or objects who can read LAPS Passwords",
       "category": "Admin Hunter",
       "queryList": [
         {
@@ -272,7 +292,7 @@
       ]
     },
     {
-      "name": "Find all computer or objects who can read LAPS Passwords",
+      "name": "LAPS Passwords Readable by Owned Principals",
       "category": "Admin Hunter",
       "queryList": [
         {
@@ -303,7 +323,7 @@
     },
     {
       "name": "Find the Shortest path to a high value target from an owned object",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -358,7 +378,7 @@
       "queryList": [
         {
           "final": true,
-          "query": "match p=(g:Group)-[:CanRDP]->(c:Computer) where g.objectid ENDS WITH '-513' return p"
+          "query": "MATCH p=(g:Group)-[:CanRDP]->(c:Computer) where g.objectid ENDS WITH '-513' return p"
         }
       ]
     },
@@ -674,7 +694,7 @@
     },
     {
       "name": "Find if unprivileged users have rights to add members into groups",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -750,7 +770,7 @@
     },
     {
       "name": "Find All edges any owned user has on a computer",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -1105,7 +1125,7 @@
     },
     {
       "name": "Check if Owned Users can do ANYTHING (HEAVY)",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -1116,7 +1136,7 @@
     },
     {
       "name": "Check if Groups of Owned Users can do ANYTHING (HEAVY)",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -1127,7 +1147,7 @@
     },
     {
       "name": "Find any object that has inbound control over the domain.",
-      "category": "Domain Escalation",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": false,
