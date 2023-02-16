@@ -33,7 +33,7 @@ MATCH (n:Computer) WHERE n.operatingsystem =~ "(?i).*(2000|2003|2008|2012|xp|vis
 
 Check for Computers without LAPS.
 ```cypher
-MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslapS
+MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslaps
 ```
 or
 ```cypher
@@ -64,10 +64,11 @@ MATCH p=(m:User)-[r:AdminTo]->(n:Computer) where m.admincount = false Return m.n
 
 -----------
 
-Find All Users with an SPN/Find all Kerberoastable Users with passwords last set less than 5 years ago.
+Find All Users with an SPN. (Kerberoastable)
 ```cypher
 MATCH (n:User)WHERE n.hasspn=true RETURN n.name, n.pwdlastset
 ```
+Find all Kerberoastable Users with passwords last set less than 5 years ago.
 Kerberoastable User and when PW last set in epochtime -> use a converter https://www.epochconverter.com/batch
 ```cypher
 MATCH (u:User) WHERE u.hasspn=true AND u.pwdlastset < (datetime().epochseconds - (1825 * 86400)) AND NOT u.pwdlastset IN [-1.0, 0.0] RETURN u.name, u.pwdlastset order by u.pwdlastset
@@ -116,7 +117,7 @@ MATCH (u:User) where u.plaintext=True AND u.enabled=True RETURN u.name, u.plaint
 Manual Crackhound, Username and Domain are all capital letters.
 Username Hash and Password needs to be in quotes.
 ```cypher
-match (u:User) where u.name="<BH_USER@DOMAIN>" set u.plaintextpassword="<S3c3t5>" set u.nthash="<HASH>" set u.owned=True set u.plaintext=True return u
+MATCH (u:User) where u.name="<BH_USER@DOMAIN>" set u.plaintextpassword="<S3c3t5>" set u.nthash="<HASH>" set u.owned=True set u.plaintext=True return u
 ```
 
 
