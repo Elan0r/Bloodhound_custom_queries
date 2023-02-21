@@ -96,6 +96,44 @@
       ]
     },
     {
+      "name": "Groups with AdminCount, but not highvalue",
+      "category": "Mark As High",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH p = (g:Group {admincount: True}) WHERE (g.highvalue) IS NULL OR g.highvalue = False RETURN g",
+          "allowCollapse": true
+        }
+      ]
+    },
+    {
+      "name": "Non AdminCount groups with Local Admin",
+      "category": "Mark As High",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH p=(n:Group)-[:AdminTo*1..]->(m:Computer) WHERE NOT n.admincount RETURN p",
+          "allowCollapse": true
+        }
+      ]
+    },
+    {
+      "name": "(Warning: edits the DB) Set Username as Password and PlaintextPW",
+      "category": "Owned",
+      "queryList": [
+        {
+          "final": false,
+          "title": "Select a user",
+          "query": "MATCH (u:User {enabled: True}) WHERE u.UserNameAsPass IS NULL RETURN u.name ORDER BY u.name ASC"
+        },
+        {
+          "final": true,
+          "query": "MATCH (u:User {name:$result}) SET u.UserNameAsPass = true SET u.plaintext = true SET u.owned = true RETURN u",
+          "allowCollapse": false
+        }
+      ]
+    },
+    {
       "name": "List all owned users",
       "category": "Owned",
       "queryList": [
@@ -116,7 +154,7 @@
       ]
     },
     {
-      "name": "List all computers where PlantextPW user can RDP",
+      "name": "List all computers where PlaintextPW user can RDP",
       "category": "Owned",
       "queryList": [
         {
@@ -126,7 +164,7 @@
       ]
     },
     {
-      "name": "List all PlantextPW users of HighValue groups",
+      "name": "List all PlaintextPW users of HighValue groups",
       "category": "Owned",
       "queryList": [
         {
@@ -136,12 +174,22 @@
       ]
     },
     {
-      "name": "List all HighValue PlantextPW user",
+      "name": "List all HighValue PlaintextPW user",
       "category": "Owned",
       "queryList": [
         {
           "final": true,
           "query": "MATCH (u:User) WHERE u.plaintext=True AND u.highvalue=True RETURN u"
+        }
+      ]
+    },
+    {
+      "name": "List all PlaintextPW user",
+      "category": "Owned",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (u:User) WHERE u.plaintext=True RETURN u"
         }
       ]
     },
@@ -263,7 +311,7 @@
     },
     {
       "name": "List all High Valued Targets",
-      "category": "Domain",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -282,7 +330,7 @@
       ]
     },
     {
-      "name": "DFI All computers without LAPS (HEAVY)",
+      "name": "All computers without LAPS (HEAVY)",
       "category": "LAPS",
       "queryList": [
         {
@@ -343,7 +391,7 @@
     },
     {
       "name": "Find the Shortest path to a unconstrained delegation system from an owned object",
-      "category": "Kerberos",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -374,7 +422,7 @@
     },
     {
       "name": "Find Kerberoastable Users with a path to DA",
-      "category": "Kerberos",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -424,7 +472,7 @@
     },
     {
       "name": "Find ALL Shortest Paths to Domain Admins - Network",
-      "category": "User",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": false,
@@ -444,7 +492,7 @@
     },
     {
       "name": "Find Shortest Paths to Domain Admins - Network",
-      "category": "User",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": false,
@@ -464,7 +512,7 @@
     },
     {
       "name": "Find what groups can RDP",
-      "category": "Permissions",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -474,7 +522,7 @@
     },
     {
       "name": "Find groups that can reset passwords (HEAVY)",
-      "category": "Permissions",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -484,7 +532,7 @@
     },
     {
       "name": "Find groups that have local admin rights (HEAVY)",
-      "category": "Permissions",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -494,7 +542,7 @@
     },
     {
       "name": "Find all users that have local admin rights",
-      "category": "Permissions",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -504,7 +552,7 @@
     },
     {
       "name": "Find all active Domain Admin sessions",
-      "category": "Domain",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -614,7 +662,7 @@
     },
     {
       "name": "View all groups that contain the word 'admin'",
-      "category": "Group",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -644,7 +692,7 @@
     },
     {
       "name": "Show all high value target's groups",
-      "category": "Domain",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -664,7 +712,7 @@
     },
     {
       "name": "Find Kerberoastable users who are members of high value groups",
-      "category": "Kerberos",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -674,7 +722,7 @@
     },
     {
       "name": "Find Kerberoastable users and where they are AdminTo",
-      "category": "Kerberos",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -694,7 +742,7 @@
     },
     {
       "name": "Find if any domain user has interesting permissions against a GPO (HEAVY)",
-      "category": "Permissions",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
@@ -1101,34 +1149,52 @@
       ]
     },
     {
+      "name": "Find Unsecured Certificate Templates (ESC9)",
+      "category": "CA Domain Escalation",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (n:GPO) WHERE n.type = 'Certificate Template' and n.`Enrollee Supplies Subject` = true and n.`Client Authentication` = true and n.`Enabled` = true  RETURN n"
+        }
+      ]
+    },
+    {
+      "name": "Find Unsecured Certificate Templates (ESC9)",
+      "category": "CA Domain Escalation",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (n:GPO) WHERE n.type = 'Certificate Template' and 'NoSecurityExtension' in n.`Enrollment Flag` and n.`Enabled` = true  RETURN n"
+        }
+      ]
+    },
+    {
+      "name": "Shortest Paths to Unsecured Certificate Templates from owned principals (ESC9)",
+      "category": "CA Domain Escalation",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH p=allShortestPaths((g {owned:true})-[r*1..]->(n:GPO)) WHERE n.type = 'Certificate Template' and g<>n and 'NoSecurityExtension' in n.`Enrollment Flag` and n.`Enabled` = true and NONE(rel in r WHERE type(rel) in ['EnabledBy','Read','ManageCa','ManageCertificates']) return p"
+        }
+      ]
+    },
+    {
+      "name": "Find Certificate Authorities with Enforce Encryption not enabled (ESC11)",
+      "category": "CA Domain Escalation",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH (n:GPO) WHERE n.type = 'Enrollment Service' and NOT n.`Enforce Encryption for Requests` = 'Enabled' RETURN n"
+        }
+      ]
+    },
+    {
       "name": "Privileged kerberoastable users",
-      "category": "Kerberos",
+      "category": "Admin Hunter",
       "queryList": [
         {
           "final": true,
           "query": "MATCH p = shortestPath((u:User {hasspn:true})-[*1..]->(g:Group)) WHERE g.objectid ENDS WITH '-512' RETURN p LIMIT 100",
-          "allowCollapse": true
-        }
-      ]
-    },
-    {
-      "name": "Groups with AdminCount, but not highvalue",
-      "category": "Mark As High",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH p = (g:Group {admincount: True}) WHERE (g.highvalue) IS NULL OR g.highvalue = False RETURN g",
-          "allowCollapse": true
-        }
-      ]
-    },
-    {
-      "name": "Non AdminCount groups with Local Admin",
-      "category": "Mark As High",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH p=(n:Group)-[:AdminTo*1..]->(m:Computer) WHERE NOT n.admincount RETURN p",
           "allowCollapse": true
         }
       ]
@@ -1179,46 +1245,6 @@
           "final": true,
           "query": "MATCH p = (g:Group)-[{isacl:true}]->(m) WHERE g.objectid ENDS WITH '-513' RETURN p",
           "allowCollapse": true
-        }
-      ]
-    },
-    {
-      "name": "Find Unsecured Certificate Templates (ESC9)",
-      "category": "CA Domain Escalation",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH (n:GPO) WHERE n.type = 'Certificate Template' and n.`Enrollee Supplies Subject` = true and n.`Client Authentication` = true and n.`Enabled` = true  RETURN n"
-        }
-      ]
-    },
-    {
-      "name": "Find Unsecured Certificate Templates (ESC9)",
-      "category": "CA Domain Escalation",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH (n:GPO) WHERE n.type = 'Certificate Template' and 'NoSecurityExtension' in n.`Enrollment Flag` and n.`Enabled` = true  RETURN n"
-        }
-      ]
-    },
-    {
-      "name": "Shortest Paths to Unsecured Certificate Templates from owned principals (ESC9)",
-      "category": "CA Domain Escalation",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH p=allShortestPaths((g {owned:true})-[r*1..]->(n:GPO)) WHERE n.type = 'Certificate Template' and g<>n and 'NoSecurityExtension' in n.`Enrollment Flag` and n.`Enabled` = true and NONE(rel in r WHERE type(rel) in ['EnabledBy','Read','ManageCa','ManageCertificates']) return p"
-        }
-      ]
-    },
-    {
-      "name": "Find Certificate Authorities with Enforce Encryption not enabled (ESC11)",
-      "category": "CA Domain Escalation",
-      "queryList": [
-        {
-          "final": true,
-          "query": "MATCH (n:GPO) WHERE n.type = 'Enrollment Service' and NOT n.`Enforce Encryption for Requests` = 'Enabled' RETURN n"
         }
       ]
     }
