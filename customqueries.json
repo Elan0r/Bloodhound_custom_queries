@@ -1184,7 +1184,7 @@
       "queryList": [
         {
           "final": true,
-          "query": "MATCH (n:GPO) WHERE n.type = 'Enrollment Service' and NOT n.`Enforce Encryption for Requests` = 'Enabled' RETURN n"
+          "query": "MATCH (n:GPO) WHERE n.type = 'Enrollment Service' and n.`Enforce Encryption for Requests` = 'Disabled' RETURN n"
         }
       ]
     },
