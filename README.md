@@ -33,11 +33,11 @@ MATCH (n:Computer) WHERE n.operatingsystem =~ "(?i).*(2000|2003|2008|2012|xp|vis
 
 Check for Computers without LAPS.
 ```cypher
-MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslaps
+MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslaps, c.domain
 ```
 or
 ```cypher
-MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslaps, c.enabled
+MATCH (c:Computer) WHERE c.haslaps=FALSE RETURN c.name, c.haslaps, c.enabled, c.domain
 ```
 
 -----------
