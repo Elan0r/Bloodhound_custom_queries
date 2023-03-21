@@ -1073,6 +1073,17 @@
       ]
     },
     {
+      "name": "Show Enrollment Rights for all enabled Certificate Template",
+      "category": "Certificates",
+      "queryList": [
+        {
+          "final": true,
+          "query": "MATCH p=(g)-[:Enroll|AutoEnroll]->(n:GPO) WHERE n.type = 'Certificate Template' and n.Enabled = true return p",
+          "allowCollapse": false
+        }
+      ]
+    },
+    {
       "name": "Show Rights for Certificate Authority",
       "category": "Certificates",
       "queryList": [
