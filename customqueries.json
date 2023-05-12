@@ -634,7 +634,7 @@
       "queryList": [
         {
           "final": true,
-          "query": "OPTIONAL MATCH (u1:User) WHERE u1.hasspn=true OPTIONAL MATCH (u1)-[r:AdminTo]->(c:Computer) RETURN u1"
+          "query": "MATCH p=(u:User {hasspn:true})-[r:AdminTo]->(c:Computer) RETURN p"
         }
       ]
     },
