@@ -210,11 +210,27 @@
       }]
     },
     {
+      "name": "Find all objects who can read LAPS Passwords 2",
+      "category": "Admin Hunter",
+      "queryList": [{
+        "final": true,
+        "query": "MATCH p = ()-[r:ReadLAPSPassword]->(t:Computer {haslaps:true}) RETURN p"
+      }]
+    },
+    {
       "name": "Find owned objects who can read LAPS Passwords",
       "category": "Admin Hunter",
       "queryList": [{
         "final": true,
-        "query": "MATCH p = (n {owned: true})-[r1:MemberOf*1..]->(g:Group)-[r2:GenericAll]->(t:Computer {haslaps:true}) RETURN p"
+        "query": "MATCH p = (n {owned: true})-[r1:MemberOf*1..]->(g:Group)-[r2:GenericAll]->(t:Computer {haslaps:true}) RETURN p LIMIT 25"
+      }]
+    },
+    {
+      "name": "Find owned objects who can read LAPS Passwords 2",
+      "category": "Admin Hunter",
+      "queryList": [{
+        "final": true,
+        "query": "MATCH p = (n {owned: true})-[r:ReadLAPSPassword]->(t:Computer {haslaps:true}) RETURN p LIMIT 25"
       }]
     },
     {
